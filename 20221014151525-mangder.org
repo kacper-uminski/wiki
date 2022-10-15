@@ -1,0 +1,44 @@
+:PROPERTIES:
+:ID:       d5de3000-95f1-4cc3-a0fd-758e1f6d21df
+:END:
+#+title: Mängder
+#+STARTUP: latexpreview
+* Mängd
+En *mängd* är en samling objekt kallade element. Om \[x\] är ett element i mängden \[A\],  så skrives det \[x \in A\]. Annars \[x \notin A\]
+
+** Exempel på mändger
+\begin{align*}
+& A = \{1,2,3\} \\
+& B = \{a,b,c,d\} \\
+& C = \{x: \text{x är ett jämt heltal och } 2 \ge x \ge 7\} = \{2,4,6\}
+\end{align*}
+
+* Delmängd
+\[A,B\] är mängder. \[A\] är *delmängd* till \[B\], \[A \subseteq B\], om varje element i \[A\] också finns i \[B\].
+
+** Exempel på delmängder
+\[\{1,2\} \subseteq \{1,2\} \subseteq \{1,2,3\} \not\subseteq \{1,2,4\}\]
+
+* Äkta delmängd
+\[A\] är en *äkta delmängd* till \[B\], \[A \subset B\] om \[A \subseteq B\] och det finns minst ett element \[B\] som ej finns i \[A\].
+
+** Exempel på äkta delmängder
+\[\{a,b\} \subset \{a,b,c\} \not\subset \{a,b,c\}\]
+
+* Några viktiga mängder
+- Naturliga tal: \[ \mathbb{N} = \{0,1,2,3,..,\infty\} \]
+- Positiva Heltal: \[ \mathbb{Z}_+ = \{1,2,3,...,\infty\} \]
+- Heltal: \[ \mathbb{Z} =\{-\infty,...,-3,-2,-1,0,1,2,3,...,\infty\} \]
+- Rationella tal: \[ \mathbb{Q} = \left\{\frac{p}{q}: p \in \mathbb{Z}, q \in \mathbb{Z} \right\} \]
+- Reella tal:  \[ \mathbb{R} =\text{Rationella och irrationella tal} \].
+- Tomma mängden: \[ \varnothing = \text{mängden utan element}\].
+- Dessutom gäller det att: \[ \varnothing \subset \mathbb{Z}_+ \subset \mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \]
+
+* Mängdoperationer
+Ett antal operationer kan genomföras på mängder:
+** Likhet
+För mängderna \[A,B\] gäller att \[A=B\] om \[A \subseteq B\] och \[B \subseteq A\].
+*** Exempel
+\[ \{a,b,c\} = \{c,b,a\}, \{x \in \mathbb{Z}: 3 < x \le 7\} \]
+** Union
+
