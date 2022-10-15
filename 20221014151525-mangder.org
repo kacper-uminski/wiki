@@ -41,4 +41,5 @@ För mängderna \[A,B\] gäller att \[A=B\] om \[A \subseteq B\] och \[B \subset
 *** Exempel
 \[ \{a,b,c\} = \{c,b,a\}, \{x \in \mathbb{Z}: 3 < x \le 7\} \]
 ** Union
+För
 
