@@ -4,7 +4,8 @@
 #+title: Mängder
 #+STARTUP: latexpreview
 * Mängd
-En *mängd* är en samling objekt kallade element. Om \[x\] är ett element i mängden \[A\],  så skrives det \[x \in A\]. Annars \[x \notin A\]
+En *mängd* är en samling objekt kallade element.
+Om \[x\] är ett element i mängden \[A\],  så skrives det \[x \in A\]. Annars \[x \notin A\]
 
 ** Exempel på mändger
 \begin{align*}
@@ -31,8 +32,9 @@ En *mängd* är en samling objekt kallade element. Om \[x\] är ett element i m�
 - Heltal: \[ \mathbb{Z} =\{-\infty,...,-3,-2,-1,0,1,2,3,...,\infty\} \]
 - Rationella tal: \[ \mathbb{Q} = \left\{\frac{p}{q}: p \in \mathbb{Z}, q \in \mathbb{Z} \right\} \]
 - Reella tal:  \[ \mathbb{R} =\text{Rationella och irrationella tal} \].
-- Tomma mängden: \[ \varnothing = \text{mängden utan element}\].
+- Tomma mängden: \[ \varnothing = \text{Mängden utan element}\].
 - Dessutom gäller det att: \[ \varnothing \subset \mathbb{Z}_+ \subset \mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \]
+- Universum/grundmängd: \[\mathbb{U}\]
 
 * Mängdoperationer
 Ett antal operationer kan genomföras på mängder:
@@ -41,5 +43,28 @@ För mängderna \[A,B\] gäller att \[A=B\] om \[A \subseteq B\] och \[B \subset
 *** Exempel
 \[ \{a,b,c\} = \{c,b,a\}, \{x \in \mathbb{Z}: 3 < x \le 7\} \]
 ** Union
-För
-
+\[ A \cup B =  \{x: x \in A \text{ eller } x \in B\} \]
+** Snitt
+\[ A \cap B =  \{x: x \in A \text{ och } x \in B\} \]
+** Symmetrisk Differens
+\[ A \triangle B = \{x: x \in A \text{ eller } x \in B \text{ men } x \notin A \cap B\} \]
+** Differens
+\[ A \setminus B = \{x: x \in A \text{ och } x \notin B\} \]
+** Komplement
+Om \[A \subseteq \mathbb{U}\] så är \[\overline{A} = \mathbb{U} \setminus A\]
+** Disjunktion
+Om \[A \cap B = \varnothing\] så är \[A\] och \[B\] disjunkta.
+** Kartesisk Produkt
+\[ A \times B = \{(a,b): a \in A, b \in B\} \] där \[(a,b)\] är ett [[id:f6de0b45-df4c-4dbf-bbd3-1fc80205ebaf][ordnat par]].
+\[A \times A\] kan skrivas \[A^2\]
+** Kardinalitet
+*Kardinaliteten* \[|A|\] hos mängden \[A\] är antalet element som \[A\] innehåller.
+Om \[|A| = n\] där \[n \in \mathbb{Z}_+\] kallas \[A\]  ändlig, annars oändlig.
+*** Sats 1 (2.5.3)
+\[A,B \neq \varnothing \Rightarrow |A \times B| = |A| \times |B| \]
+*** Sats 2 (2.5.4)
+\[ A,B \neq \varnothing \Rightarrow |A \cup B| = |A| + |B| - |A \cap B| \]
+\[  A,B,C \neq \varnothing \Rightarrow |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C| \]
+** Potensmängd
+*Potensmängden* \[P(A)\] till \[A\] är mängden av alla delmängder till \[A\], inklusive \[\varnothing\].
+\[|P(A)| = 2^{|A|}\]

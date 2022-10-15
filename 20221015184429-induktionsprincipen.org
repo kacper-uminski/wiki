@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       baeba497-6275-45d1-87b9-f779606ab3c6
+:END:
+#+STARTUP: latexpreview
+#+title: Induktionsprincipen
+Låt \[n_0 \in \mathbb{N}\]. \[P(n)\] är ett påstående beroende av \[n\]. Antag att följande gäller:
+
+\begin{align}
+& P(n_0) \text{ är sant.} \\
+& \text{Om } P(s) \text{ är sant för något } s \ge n_0, \text{ så är även } P(s+1) \text{ sant}.
+\end{align}
+
+Då är \[P(n)\] sant för alla \[n \ge n_0\].
+* Induktionsbevis

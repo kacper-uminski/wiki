@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       f6de0b45-df4c-4dbf-bbd3-1fc80205ebaf
+:END:
+#+STARTUP: latexpreview
+#+title: Ordnade Par
+Ett *Ordnat Par* är ett objekt på formen \[(a,b)\] där \[(a,b) = (c,d)\] om \[a = c, b = d\] och \[(a,b) \neq (b,a)\] om \[a \neq b\].
