@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       bf87e803-16a7-49e0-b6df-494fd07adb63
+:END:
+#+STARTUP: latexpreview
+#+title: Primtal
+Ett *primtal* är ett naturligt tal som är större än 1 och inte har några andra positiva delare än 1 och talet självt.
+* Wilson's sats
+Ett tal \[n \ge 2\] är ett primtal om \[(n-1)! \equiv -1 \pmod{n}\]

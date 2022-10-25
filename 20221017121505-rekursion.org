@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       4f126c68-9487-4cef-b5d0-08fb17970e72
+:END:
+#+STARTUP: latexpreview
+#+title: Rekursion
+En talföljd \[a_0, a_1, a_2, a_3,...\] är rekursivt definierad om det för något \[n \ge 1\] gäller:
+1. Talen \[a_0,...,a_{r-1}\] är explicit givna.
+2. För alla \[n \ge r\] gäller att \[a_n = f(n, a_{n-1},...,a_{n-r})\] där \[f\] är en känd funktion.
+
+* Exempelföljder
+- Följden \[a_n = n^2, n \ge 0\] är explicit definierad.
+
+- Följden \[ \left\{ \begin{array}{ll} a_n = 2a_{n-1}+1, n \ge 1& \\ a_0 = 1& \end{array} \right. \] är rekursivt definierad.
+
+- Följden \[ \left\{ \begin{array}{ll} a_n = a_{n-1}+a_{n-2}+a_{n-3},& n \ge 3 \\ a_0, a_1, a_2 = 1& \end{array} \right. \] är rekursivt dedfinierad (trestegsrekursion).
+
+* Exempeluppgifter
+** Uppgift 1
+Hitta ett explicit uttryck för \[a_n\] som definieras av:
+\[\left\{ \begin{array}{ll} a_n = 3a_{n-1}-2, &n \ge 1\\ a_0 = 2&  \end{array} \right.\]
+
+*** Lösning
+Räkna först utt några termer: \[a_0 = 2, a_1 = 4, a_2 = 10, a_3 = 28, a_4 = 82\]
+
+Använd dessa för att formulera en hypotes: \[a_n = 3^n + 1\]
+
+Visa att denna är en lösning (Induktionsbevis kan användas.):
+1. Bassteg: Visa för \[n = 0\]: \[VL = a_0 = 2 = 3^0 + 1 = HL\]
+2. Antag att hypotesen gäller då \[n = k \ge 0\], alltså att \[a_k = 3^k + 1\]
+3. Visa att hypotesen gäller då \[n = k+1\], alltså att \[a_{k+1} = 3^{k+1} + 1\]:
+
+    \begin{align*}
+    VL& = a_{k+1}\\
+    & = 3a_k - 2\\
+    & = 3(3^k + 1) - 2 & \mbox{(Från 2)}\\
+    & = 3^{k+1} + 1\\
+    & = HL \square
+    \end{align*}
+
+4. \[\therefore\] Hypotesen följer från induktionsprincipen

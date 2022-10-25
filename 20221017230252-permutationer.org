@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       cc204fba-7891-4cfd-ab76-d041e101ee4c
+:END:
+#+STARTUP: latexpreview
+#+title: Permutationer
+Betrakta \[n\] olika objekt. En anordnad uppräkning av samtliga objekt kallas en permutation. En ordnad uppräkning av \[k\] stycken av objekten kallas en permutation av storlek (eller ordning) \[k\].
+* Sats 5.3.5
+Antalet permutationer av storlek \[k\] av \[n\] olika objekt är \[P(n,k) = \frac{n!}{(n-k)!}\]
+Notera att antalet permutationer av storlek \[n = \frac{n!}{0!} = n!\]
+* Sats 5.4.2
+Betrakta \[n\] objekt där det finns \[n_1\] objekt av typ 1, \[n_2\] objekt av typ 2,..., och \[n_s\] objekt av typ s så att \[\sum_{i=1}^{s}n_i = n\]
+Då är antalet sätt att ordna objekten \[\frac{n!}{\prod_{i=1}^{s}n_i!}\]
+* Exempelproblem
+** Exempel 1
+Hur många olika "ord" kan bildas av bokstäverna i ordet "samarbete" om:
+- a) Varje bokstav får förekomma precis en gång.
+- b) Varje bokstav får förekomma så många gånger som den gör i "samarbete".
+- c) Det ska innehålla ordet AS eller TE och varje bokstav får förekomma så många gånger som den gör i "samarbete".
+*** Lösning
+- a) Det finns totalt 7 olika bokstäver. Då är antalet "ord" \[7!\]
+- b) Det finns totalt 9 bokstäver med 2 A och 2 E. Därför är totala antalet "ord" \[\frac{9!}{2! \cdot 2!}\]
+- c) De angivna "orden" AS och TE kan betraktas som individuella bokstäver då de alltid måste förekomma tillsammans i den ordningen. Antalet ord med vardera ord blir då \[\frac{8!}{2!}\]. Båda grupperna ord innehåller då dock ord med både AS och TE vilket orsakar att dessa ord räknas två gånger. För att motverka detta kan, enligt principen om inklusion och exklusion, antalet ord med både AS och TE \[= 7!\] subtraheras. Då blir: \[|\{\text{Ord med AS}\} \cup \{\text{Ord med TE}\}| = \frac{8!}{2!} + \frac{8!}{2!} - \frac{7!}{2!} = 8!-7! = 7\cdot 7!\]

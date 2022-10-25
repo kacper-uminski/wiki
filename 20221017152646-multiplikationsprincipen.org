@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       fa10cbea-7417-4d96-b9c6-8c06062e6d12
+:END:
+#+STARTUP: latexpreview
+#+title: Multiplikationsprincipen
+Om man ska utföra totalt \[k\] olika uppgifter och uppgift \[i\] kan utföras på \[n_i\] olika sätt efter att de \[i-1\] föregående uppgifterna utförs, så kan detta göras på \[\prod_{i = 1}^{k}i\] olika sätt.
+
+Formellt kan detta skrivas \[|A_1 \times A_2 \times ... \times A_k| = \prod_{i=1}^{k}|A_i|\]
+* Exempelproblem
+** Exempel 1
+3 Volvo, 4 BMW och 2 VW säljes. På hur många vis kan en av varje köpas?
+*** Lösning
+Det finns totalt \[3 \cdot 4 \cdot 2 = 24\] olika möjligheter.
+
+** Exempel 2
+Ett lösenord bildat av siffrorna 0-9 får ha minst 3 och högst 6 tecken. Hur många olika lösenord kan förekomma?
+*** Lösning
+Det kan förekomma lösenord med 3,4,5 eller 6 tecken. Enligt multiplikationsprincipen kommer vardera alternativ ha \[10^n\] olika möjliga lösenord för respektive antal tecken. Enligt [[id:4740e077-149a-40da-8211-99f10e63865b][additionsprincipen]] kan det totala antalet lösenord representeras av \[\sum_{i=3}^{6}10^i = 1111000\] 

@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       4740e077-149a-40da-8211-99f10e63865b
+:END:
+#+STARTUP: latexpreview
+#+title: Additionsprincipen
+Om en av \[k\] uppgifter ska utföras och uppgift \[i\] kan utföras på \[n_i\] olika sätt där \[i = 1,2,...,k\] så kan detta göras på \[\sum_{i = 1}^{k}n_i\] olika sätt.
+Formellt kan detta skrivas: \[\left| \bigcup_{i = 1}^n A_i \right| = \sum_{i = 1}^n |A_i| \text{ om } \bigcap_{i = 1}^n A_i = \varnothing\]
+
+* Exempel:
+3 Volvo, 4 BMW och 2 VW säljes. På hur många vis kan en av dessa köpas?
+** Lösning
+Det finns totalt \[3 + 4 + 2 = 9\] olika möjligheter.

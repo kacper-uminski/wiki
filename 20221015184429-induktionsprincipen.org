@@ -12,3 +12,29 @@ Låt \[n_0 \in \mathbb{N}\]. \[P(n)\] är ett påstående beroende av \[n\]. Ant
 
 Då är \[P(n)\] sant för alla \[n \ge n_0\].
 * Induktionsbevis
+Visa att: \[\sum_{i = 1}^{n}i = \frac{n(n+1)}{2}\]  (*) för alla \[n \in \mathbb{Z}_+\]
+
+** 1. Bassteg:
+Visa för \[n = 1\]:
+
+   \[VL = 1, HL = 1 \Rightarrow VL=HL\]
+
+** 2. Induktionsantagande:
+   Antag att * gäller då \[n = s, s \in \mathbb{Z}_+\]
+
+   \[\sum_{i = 1}^{s}i = \frac{s(s+1)}{2}\]
+
+** 3. Induktionssteg:
+Visa med hjälp av induktionsantagandet i (2) att att * gäller då \[n = s+1\]:
+\begin{align*}
+VL & = \sum_{i = 1}^{s+1}i \\
+& = \sum_{i = 1}^{s}i + s+1 \\
+& = \frac{s(s+1)}{2} + s+1& \mbox{(Från 2)} \\
+& = \frac{s(s+1) + 2(s+1)}{2} \\
+& = \frac{(s+1)(s+2)}{2} \\
+& = HL \\
+& \Rightarrow VL = HL \square
+\end{align*}
+
+** 4. Slutsats
+\[ \therefore \] Propositionen * gäller för alla \[n \in \mathbb{Z}_+\] enligt induktionsprincipen.

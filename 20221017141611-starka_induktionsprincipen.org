@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       826cc8ef-4050-4c4e-9593-39aebe880534
+:END:
+#+STARTUP: latexpreview
+#+title: Starka Induktionsprincipen
+Låt \[n_0,n_1 \in \mathbb{N}, n_1 \le n_0 \ge 0\] och låt \[P(n)\] vara ett påstående som beror av \[n\].
+
+Antag att följande gäller:
+1. \[P(n_0), P(n_0+1),...,P(n_1)\] är sanna.
+2. Om \[P(n_0), P(n_0+1),...,P(n_1)\] är sanna för något \[s \ge n_1\] så är \[P(s+1)\] sant.
+
+Då är \[P(n)\] sant för alla \[n \ge n_0\].
+
+* Exempelproblem
+En talföljd definieras rekursivt:
+
+\[\left\{ \begin{array}{ll} a_n = 6a_{n-1} - 9a_{n-2},& n \ge 2\\ a_0 = 1&\\ a_1 = 3&\end{array} \right.\]
+
+Visa att \[ a_n = 3^n \]   \[*\]
+
+Induktionsbevis:
+1. Bassteg: \[a_0 = 3^0 = 1, a_1 = 3^1 = 3\]
+2. Antag att * gäller då \[n = 0,1,2,...,k \ge 1\], speciellt att \[a_k = 3^k, a_{k-1} = 3^{k-1}\].
+3. Visa att * gäller då \[n = k+1\], alltså att \[a_{k+1} = 3^{k+1}\]:
+
+   \begin{align*}
+   VL & = a_{k+1}\\
+   & = 6a_k - 9a_{k-1}\\
+   & = 6 \cdot 3^k - 9 \cdot 3^{k-1} & \mbox{(Från 2)}\\
+   & = 6 \cdot 3 \cdot 3^{k-1} - 9 \cdot 3^{k-1}\\
+   & = 3^{k-1}(18-9)\\
+   & = 3^{k-1} \cdot 3^2\\
+   & = 3^{k+1}\\
+   & = HL \square
+   \end{align*}
+
+4. \[\therefore\] Påståendet * följer från den starka induktionsprincipen.

@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       4573c107-7a63-4a19-beff-d0957dfc6751
+:END:
+#+STARTUP: latexpreview
+#+title: Summanotation
+Summor kan noteras med den grekiska bokstaven stora sigma \[(\Sigma)\].
+* Typer av summor
+- Aritmetisk summa: \[\sum_{i=1}^{n}i = \frac{2(n+1)}{2}\]
+
+- Geometrisk summa: \[\sum_{i=0}^{n}aq^i = a \frac{q^{n+1}-1}{q-1}, q \neq 1\]
