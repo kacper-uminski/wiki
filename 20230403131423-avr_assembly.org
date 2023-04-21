@@ -1,0 +1,425 @@
+:PROPERTIES:
+:ID:       a447e52e-79c5-4f91-87e8-afb8265a2de7
+:END:
+#+title: AVR Assembly
+* Assembler file
+The file begins with a vector table. Here you can specify jumps for interrupts.
+The processor usually jumps to 0x00 at start/reset.
+* Memory usage definition
+Data segment - .dseg
+Code segment - .cseg
+* General
+- SRAM (1kiB)
+- General purpose registers r0-r31 (8-bit).
+  - r16-r31 can be used for logic and arithmetic operations.
+  - r0-r15 can be used for some operations
+  - r24-r31 can be combined to 16-bit pairs. (X, Y, Z)
+  - Stack pointer is 16-bit [SPH:SPL]
+- IO-register
+- Program counter
+- Status register (Info and result from ALU.)
+
+* Data move instructions
+#+begin_src asm
+  ldi	r16, 23 	; Load immediate
+  mov	r13, r16	; Move (dest, src)
+#+end_src
+* Multi-byte addition
+Carry is used to carry overflow from lower bytes to higher bytes.
+#+NAME: Assembly used
+#+begin_src asm
+  add	r16, r20	; Carry is set, but not used.
+  adc	r17, r21	; Carry is set and used.
+#+end_src
+
+* Logical instructions
+#+NAME: Use andi to find the  three least significant bits at address $0120.
+#+begin_src asm
+  lds	 r16, $0120	; r16 = mem($0120)
+  andi r16, $07	; $07 = 0000 0111
+#+end_src
+
+* Shifts
+#+NAME: Examples
+#+begin_src asm
+  ldi	r16, 0b10100101	; r16 = 10100101
+  lsr	r16		; r16 = 01001010
+
+  ldi	r16, 0b10100101	; r16 = 10100101
+  asr	r16		; r16 = 11010010 (arithmetic shift right, overflow wraps to left side.)
+
+  ldi	r16, 0b10100101	; r16 = 10100101
+  lsl	r16		; r16 = 01001010 No asl exits, is translated to lsl.
+#+end_src
+
+* Jumps
+** Unconditional jumps
+#+begin_src asm
+  A:				; Symbolic address
+          abc
+          xyz
+          jmp B			; Unconditional jump to B.
+  B:
+          xyz
+          abc
+	
+                                  ; Addresses can be given absolutely
+  $1000	A:
+          jmp B			; jmp $1200
+
+  $1200	B:
+          ...
+
+                                  ; Or relatively.
+  $1000	A:
+          rjmp B			; jmp +$200
+#+end_src
+** Conditional jumps
+#+begin_src asm
+          lds	r16, $101
+          lds	r17, $102
+          cp	r16, r17	; r16-r17 => (Z, N, C, V)
+          brmi	R17BIG		; If N=1 (Branch Minus)
+          mov	r17, r16
+  R17BIG:
+          sts	$103, r17
+#+end_src
+
+#+NAME: Write code to set Z if the unsigned integer value in r16 is in the interval [1..8]. 
+#+begin_src asm
+  BRACKET:
+          cpi	r16, 1		; r16-1
+          brcs	BRACKET_DONE
+          ;; C=1 Z=0 if r16<1
+          ;; C=0 Z=1 if r16=1
+          ;; C=0 Z=0 if r16>
+          cpi	r16, 9		;r16-91
+          brcc	BRACKET_DONE
+          ;; C=1 Z=0 if r16<91s
+          ;; C=0 Z=1 if r16=91
+          ;; C=0 Z=0 if 16>91s
+          sez
+  BRACKET_DONE:
+          ret
+#+end_src
+** Loops
+#+NAME: Calculate the sum of [1..255] and store the result in $02D2
+#+begin_src asm
+          clr	r22		; sum = 0
+          clr	r21
+          ldi 	r20,	255	; index
+  AGAIN:
+          add	r21,	r20	; sum += index
+          brcc 	NO_CARRY	; Branch carry clear.
+          inc	r22
+  NO_CARRY:
+          dec	r20		; r20 --
+          brne	AGAIN
+          sts	$02D2,	r21
+          sts	$02D3,	r22
+#+end_src
+
+* IO Instructions
+Configure PORTB so that bits 0-3 are inputs and 4-7 are outputs.
+Then read the four low bits and write them out by the four high bits.
+#+begin_src asm
+  ldi	r16,	$F0	; $F0 = 11110000
+  out	DDRB,	r16	; oooiii (o=out, i=in)
+  in	r16,	PINB	; Read from PINB
+  andi	r16,	$0F	; Mask bits
+  swap	r16
+  out	PORTB,	r16
+#+end_src
+
+A button is connected to PORTB, bit 2; Use sbic to set r16 to true (!=0) if the button is pressed, else false (=0).
+#+begin_src asm
+  GET_KEY:
+          clr	r16		; r16 = $00
+          sbic	PINB, 2		; Skip next instruction if not pressed
+          ser	r16		; r16=$FF
+          jmp	GET_KEY
+#+end_src
+
+* Addressing Modes
+#+NAME: Summary
+| Instruction | Pointer/Constant                | Memory |
+| ldi         | Constant Value                  | ----   |
+| lds, sts    | Constant Address                | SRAM   |
+| ld, st      | X, X+, -X, Y, Y+, -Y, Z, Z+, -Z | SRAM   |
+| ldd, std    | Y+Constant, Z+Constant          | SRAM   |
+| lpm         | Z, Z+                           | Flash  |
+AVR supports the following addressing modes.
+
+** Immediate
+#+NAME: Immediate
+#+begin_src asm
+          subi	r20,	$12
+#+end_src
+
+** Register Direct
+The data is contained purely in registers.
+#+NAME: Register Direct
+#+begin_src asm
+          com	r16
+          add	r20,	r21
+#+end_src
+
+** Data Direct (Absolute address)
+The effective address (EA) is given as a constant. EA is the memory address where the argument exists.
+#+NAME: Addition of two integers.
+#+begin_src asm
+          lds	r16,	$120
+          lds	r17,	$122
+          add	r16,	r17
+          sts	$36E,	r16
+          lds	r16,	$121
+          lds	r17,	$123
+          addc	r16,	r17
+          sts	$36F,	r16
+#+end_src
+** Data Indirect
+#+NAME: Example
+#+begin_src asm
+          ld	r20,	x	; Load the contents from x into r20.
+          st	y,	r16	; Store into y the contents of r16.
+  OFFSET:
+          ldd	r20,	y+5	; Load with displacement
+          std	z+3,	r20
+  POST_INCREMENT:
+          ld	r20,	x+
+          st	y+,	r16
+  PRE_DECREMENT:
+          ld	r20,	-x
+          st	-y,	r16
+#+end_src
+
+#+NAME: NULL-Terminated String
+#+begin_src asm
+          ldi	XH,	HIGH(DATA)
+          ldi	XL,	LOW(DATA)
+  NEXT:
+          ld	r16,	X
+          cp	r16,	0
+          breq	KLAR
+          call	PROCESS
+          adiw	XH:XL,	1	; The XH: is optional, but clarifying.
+          jmp	NEXT
+#+end_src
+
+The Flash storage of the controller is 16-bit wide and is used primarily to store instructions.
+Each line of code consists of two bytes (addresses).
+#+begin_src asm
+          .org	0		; Store that which is below at address 0x00000000.
+          jmp	MAIN
+  TAB:
+          .db	0,1,2,3,4,5
+          .dw	0x083F
+  LOOKUP:
+          ldi	ZH,	HIGH(TAB*2)
+          ldi	ZL,	LOW(TAB*2)
+          lpm	r16,	Z	; lpm (Load Program Memory) can only use Z.
+          call	PROCESS
+          adiw	XL,	1
+#+end_src
+
+#+NAME: Copy a byte from Y+6 to Y+1 with base address Y=$201
+#+begin_src asm
+          ldi	YH,	HIGH($201)
+          ldi	YL,	LOW($201)
+          ldd	r16,	Y+6
+          std	Y+1,	r16
+#+end_src
+
+*** Post-Increment
+#+NAME: Read ASCII from a table in program memory using the Z pointer and post-increment
+#+begin_src asm
+  STRING:
+          .db	"DATORTEKNIK",	0
+  SEND:
+          ldi	ZH,	HIGH(STRING*2)
+          ldi	ZL,	LOW(STRING*2)
+  SEND_NEXT:
+          lpm	r16,	Z+
+          cpi	r16,	0
+          breq	SEND_DONE
+          call	PROCESS
+          jmp	SEND_NEXT
+#+end_src
+
+*** Pre-Decrement
+#+NAME: Search backward in Memory (SRAM) beginning at $3FF until the number 7 is found.
+#+begin_src asm
+  FIND:
+          ldi	ZH,	HIGH($400)
+          ldi	ZL,	LOW($400)
+  FIND_PREV:
+          ld	r16,	-z
+          cpi	r16,	7
+          breq	DONE
+          jmp	FIND_PREV
+#+end_src
+
+* The Stack
+The stack is initialized by setting the stack pointer to RAMEND, which is a given constant.
+#+begin_src asm
+          ldi	r16,	HIGH(RAMEND)
+          out	SPH,	r16
+          ldi	r16,	LOW(RAMEND)
+          out	SPL,	r16
+#+end_src
+
+The value of the program counter is pushed or popped by call and ret respectively.
+It is possible to manually push to and pop from the stack using push and pop.
+#+begin_src asm
+          inc	r16
+          call	A		; r16 is only temporarily changed by A.
+  A:
+          push	r16		; r16 is pushed to the stack.
+          and		r16,	r17	; r16 is changed here.
+          out		PORTB,	r16
+          pop		r16		; r16 is popped back from the stack, and is again what it was before A.
+          ret
+#+end_src
+
+** Example
+Create a subroutine to calculate the sum of 10 consecutive integers, beginning with the value in r17.
+Return the sum in r17.
+
+#+begin_src asm
+  ;;; Sub SUM
+  ;;; Calculate sum of 10 consecutive numbers
+  ;;; starting with number in r17
+  ;;; IN: r17, starting number
+  ;;; OUT: r17, sum
+  SUM:
+          push	r16		; save context
+          push	r18
+          ldi	r16,	10	; loop index
+          clr	r18		; clear sum
+  SUM_LOOP:
+          add	r18,	r17	; add to sum
+          inc	r17
+          dec	r16		; next in loop
+          brne	SUM_LOOP
+          mov	r17,	r18	; return value
+  SUM_EXIT:
+          pop	r18		; restore context
+          pop	r16
+          ret
+#+end_src
+
+** Return Stack
+It is possible to return values on the stack.
+#+begin_src asm
+  ;;; Sub SUM
+  ;;; Calculate sum of 10 consecutive numbers
+  ;;; starting with number in parameter stack.
+  ;;; IN: first pos in parameter stack.
+  ;;; OUT: sum in first pos in parameter stack.
+  SUM:
+          in	ZH,	SPH	; copy stack pointer to Z
+          in	ZL,	SPL
+          push	r17	; get parameter 
+          ldd	r17,	Z+3	; from stack
+          push	r16	; save context
+          push	r18
+          ...			; same as before
+  SUM_EXIT:
+          pop	r18		; restore context
+          pop	r16
+          std	Z+3,	r17	; store sum in
+          pop	r17		; return stack
+#+end_src
+
+* Interrupts
+Using interrupts.
+#+begin_src asm
+          .org	0000
+          jmp	MAIN
+          .org	0002
+          jmp	EXT_INT0
+          .org	INT_VECTORS_SIZE
+
+  MAIN:
+          ldi	r16,	HIGH(RAMEND)
+          out	SPH,	r16
+          ldi	r16,	LOW(RAMEND)
+          out	SPL,	r16
+          ...
+          call	INIT_INT0
+
+  MAIN_LOOP:
+          ...
+          jmp	MAIN_LOOP
+#+end_src
+
+Returning from an interrupt.
+#+begin_src asm
+  EXT_INF0:
+          push	r16		; Save context
+          in	r16,	SREG	; Save status flags.
+          push	r16		; Push status flags to stack.
+          ...
+          pop	r16		; Pop status flags from stack.
+          out	SREG,	r16	; Restore status flags to what they were before.
+          pop	r16		; Restore r16 to what it was before
+          reti
+#+end_src
+
+Enabling an interrupt.
+#+begin_src asm
+  INIT_INT0:
+          ldi	r16,	(1<<INT0) 		; Equivalent to (1<<6) or 0b01000000 in the case of INT0. Enables the interrupt
+          out	GICR,	r16
+          ldi	r16,	(1<<ISC01)|(1<<ISC00)	; Sets the flank to rising positive.
+          out	MCUCR,	r16
+          ret
+#+end_src
+
+* Labs
+** Lab3
+*** BCD:
+- Spara kontext
+- Loop
+  - Läs siffra från SRAM (Pekare)
+  - Öka siffra
+  - Spara siffra till SRAM.
+  - Siffra för stor?
+    - Ja? Nollställ i SRAM.
+    - Nej? Fortsätt.
+  - Återställ kontext
+  - Reti.
+*** MUX:
+- Spara kontext
+- Hämta position från SRAM.
+- Öka position.
+- Position för stor?
+  - Ja? Nollställ.
+- Spara position i SRAM.
+- Hämta utseende för siffra från tabell i FLASH.
+- Släck nuvarande siffra.
+- Byt till nästa position.
+- Tänd ny siffra.
+- Återställ kontext.
+- Reti
+** Lab2
+*** Beep
+#+begin_src asm
+  CONSTANTS:
+          .equ	T = 100
+          .equ	N = 50
+  ;;; Load r16 with N*x where x is the amount of time.
+  BEEP:
+          sbi	PORTB,	7
+          call	DELAY
+          cbi	PORTB,	7
+          call	DELAY
+          dec	r16
+          brne	BEEP
+          ret
+
+  DELAY:
+          ldi	r16,	T
+          ...
+          ret
+#+end_src

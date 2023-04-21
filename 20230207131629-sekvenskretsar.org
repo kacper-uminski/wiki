@@ -1,0 +1,70 @@
+:PROPERTIES:
+:ID:       586c6f45-c564-4377-aca8-788773e975d0
+:END:
+#+LATEX_HEADER: \usepackage{tikz} \usetikzlibrary{automata, arrows}
+#+title: Sekvenskretsar
+
+* Speciella sekvenskretsar
+** Räknare
+Räknare registrerar antalet pulser.
+\begin{tikzpicture}[>=stealth', shorten >=1pt, auto, node distance=2.8cm]
+\node[initial, state] (q0) {$0000$};
+\node[state] (q1) [right of=q0] {$0001$};
+%\node[state] (q2) [right of=q1] {$0010$};
+%\node[state] (q3) [right of=q2] {$0011$};
+%\node[state] (q4) [right of=q3] {$0100$};
+%\node[state] (q5) [right of=q4] {$0101$};
+%\node[state] (q6) [right of=q5] {$0110$};
+%\node[state] (q7) [right of=q6] {$0111$};
+%\node[state] (q8) [below of=q7] {$1000$};
+%\node[state] (q9) [left of=q8] {$1001$};
+%\node[state] (q10) [left of=q9] {$1010$};
+%\node[state] (q11) [left of=q10] {$1011$};
+%\node[state] (q12) [left of=q11] {$1100$};
+%\node[state] (q13) [left of=q12] {$1101$};
+%\node[state] (q14) [left of=q13] {$1110$};
+%\node[state] (q15) [left of=q14] {$1111$};
+
+\path[->] (q0) edge node{1} (q1);
+\end{tikzpicture}
+** T-vippa (Toggle flip-flop)
+\begin{equation}
+
+T=0 \Rightarrow q^+ = q 
+
+T=1 \Rightarrow q^+ = q'
+\end{equation}
+** Binär räknare med räknevillkor
+En räknare med en count enable där den enbart räknar upp när ce = 1.
+** Reversibel räknare
+Kan räkna både upp och ner.
+*** Styrsignal
+u = up, d = down
+
+| u d | mod        |
+| 0 0 | vila       |
+| 0 1 | nedräkning |
+| 1 0 | uppräkning |
+*** Ned
+\begin{*equation}
+
+T_{0u} = d
+
+T_{1u} = dq_0'
+
+T_{2u} = dq_1'q_0'
+
+T_{3u} = dq_2'q_1'q_0'
+\end{*equation}
+
+*** Upp
+\begin{*equation}
+
+T_{0u} = u
+
+T_{1u} = uq_0
+
+T_{2u} = uq_1q_0
+
+T_{3u} = uq_2q_1q_0
+\end{*equation}

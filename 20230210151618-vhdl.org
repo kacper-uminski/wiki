@@ -1,0 +1,179 @@
+:PROPERTIES:
+:ID:       5db31b22-26b9-4576-b740-87117e8c82d3
+:END:
+#+title: VHDL
+VHDL is a language to describe integrated circuits.
+
+VHDL = VHSIC HDL
+VHSIC = Very High Speed Integrated Circuit
+HDL = Hardware Description language
+
+* Standard program structure
+#+name: Imports Header
+#+begin_src vhdl
+  library IEEE;
+  use IEEE.std_logic_1164.all;
+  use IEEE.numeric.std.all;
+#+end_src
+
+#+name interface to the world.
+#+begin_src vhdl
+  entity xyz is
+    port(x, y: in std_logic;
+         z : out std_logic;
+  end entity xyz;
+#+end_src
+
+#+name: Signal Concatenation
+#+begin_src vhdl
+  qx <= q & x; -- qx is q followed by x.
+#+end_src
+
+#+name: to_integer
+#+begin_src vhdl
+to_integer(x) -- Returns x as an integer.
+#+end_src
+
+#+name: signed
+#+begin_src vhdl
+signed(x) -- Returns x as a signed integer.
+#+end_src
+
+#+name: Zeroing a vector.
+#+begin_src vhdl
+  count <= (others => '0';);
+#+end_src
+
+* TODO Components
+Components are the equivalent of functions where each defines a subcircuit.
+These can then be connected together to form a larger structure.
+Additionally, they can be made generic, which allows arbitrary sizes, inputs, etc.
+
+Below are a few examples:
+#+name: 4_bit_adder.vhdl
+#+begin_src vhdl
+  entity FA is
+    port(a, b, ci : int std_logic;
+         s, co : out std_logic);
+  end FA;
+
+  architecture func of FA is
+  signal x, y, z : std_logic;
+  begin
+    x <= a xor b;
+    y <= a and b;
+    z <= x and ci;
+    co <= y or z;
+    s <= x xor ci;
+  end func;
+#+end_src
+* Minimal example:
+((ab) + (a+b))'
+
+#+begin_src vhdl
+  entity cnet is
+    port (a, b : in std_logic;
+          c: out std_logic);
+  end entity cnet;
+
+  architecture func of cnet is
+    signal x, y : std_logic;
+  begin
+    c <= not(x or y);
+    x <= a and b;
+    y <= a or b;
+  -- c <= not((a and b) or (a or b));
+  end architecture;
+#+end_src
+
+* Combinatory circuits.
+* Multiplexer:
+** with-select-when
+Can only be used outside a process.
+#+begin_src vhdl
+  entity mux is
+    port(d : in std_logic_vector(0 to 3);
+         s : in std_logic_vector(1 downto 0);
+         y : out std_logic);
+  end entity mux;
+
+  architecture func of mux is
+  begin
+    with s select
+      y <= d(0) when "00",
+      d(1) when "01",
+      d(2) when "10",
+      d(3) when others;
+  end architecture func;
+#+end_src
+
+** when-else
+Can only be used outside a process.
+#+begin_src vhdl
+  entity mux is
+    port(d : in std_logic_vector(0 to 3);
+         s : in std_logic_vector(1 downto 0);
+         y : out std_logic);
+  end entity mux;
+
+  architecture func of mux is
+  begin
+    y <= d(0) when s = "00" else
+         d(1) when s = "01" else
+         d(2) when s = "10" else
+         d(3);
+  end architecture func;
+#+end_src
+
+** if-then-else
+Can only be used inside a process.
+
+** case-when
+Can only be used inside a process.
+* D-flip-flop
+#+name: Simple example:
+#+begin_src vhdl
+  entity Dff is
+    port(d, clk : in std_logic;
+         q : out std_logic);
+  end;
+  architecture func of Dff is
+  begin
+    process(clk)
+    begin
+      if rising_edge(clk) then
+        q <= d;
+      end if;
+    end process;
+  end architecture;
+#+end_src
+
+#+name: Coupled flip-flops:
+#+begin_src vhdl
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      y <= a;
+      x <= y;
+    end
+  end
+#+end_src
+* Data types
+** std_logic
+- Normal Values:
+  - '0' - Forcing 0
+* Decade Counter
+#+name: Decade Counter
+#+begin_src vhdl
+  library IEEE;
+  use IEEE.std_logic_1164.all;
+  use IEEE.numeric_std.all;
+
+  entity 4bit_counter is
+    port(clk, clear: in std_logic;
+         q : out std_logic_vector(3 downto 0));
+  end 4bit_counter
+
+  architecture simple of counter is
+  
+#+end_src

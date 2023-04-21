@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       5d018af5-9475-44b4-8421-59d69ed707f6
+:END:
+#+title: Jackson Structured Programming
+Algorithms + Data structures = Programs
+
+Programming with structured blocks: Sequence, Iteration(*), and selection(o).
+
+Written top-down, left to right.
+
+
+* Sekvens
+#+begin_src asm
+  PROGRAM:
+          call A
+          call B
+          call C
+
+  LOOP:
+          ...
+          jmp LOOP
+
+  B:
+          ...
+          ret
+#+end_src
+
+* Selektion
+#+begin_src asm
+  A:
+          cpi	r16,	0
+          brne	A_1
+          call	D
+          jmp	A_EXIT
+  A_1:
+          cpi	r16,	1
+          brne	A_DEFAULT
+          call	E
+          jmp	A_EXIT
+  A_DEFAULT:
+          ...
+  A_EXIT:
+          ret
+#+end_src
+* Iteration
+#+begin_src asm
+  C:
+          clr	r17
+  C_LOOP:
+          cpi	r17,	5
+          breq	C_EXIT
+          call	F
+          call	G
+          inc	r17
+          jmp	C_LOOP
+  C_EXIT:
+          ret
+#+end_src
