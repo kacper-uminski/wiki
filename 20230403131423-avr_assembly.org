@@ -376,6 +376,51 @@ Enabling an interrupt.
           ret
 #+end_src
 
+* The preprocessor and macros
+C-style macros
+#+begin_src asm
+  MACROS:
+          .macro	PUSHZ
+          push	ZH
+          push	ZL
+          .endmacro
+
+          .macro	POPZ
+          pop	ZL
+          pop	ZH
+          .endmacro
+
+          .macro	ADDI		; Macro with the arguments @0 and @1
+          subi	@0,	-@1
+          .endmacro
+#+end_src
+* A/D Conversion
+The ATMega16 has a 10-bit ADC.
+
+The input  and output to ADCH:ADCL is controlled by the ADMUX register.
+
+The clock is controlled by ADCSRA.
+
+#+begin_src asm
+  ADC10:
+          ldi	r16,	(1<<REFS0) ; |(1<<ADLAR) for 8-bit conversion to ADCH.
+          out	ADMUX,	r16
+          ldi	r16,	(1<<ADEN)
+          ori	r16,	(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)
+          out	ADCSRA,	r16
+
+  ADC_CONVRT:
+          in	r16,	ADCSRA
+          ori	r16,	(1<<ADSC)
+          out	ADCSRA,	r16
+
+  ADC10_WAIT:
+          in	r16,	ADCSRA
+          sbrc	r16,	ADSC
+          rjmp	ADC10_WAIT
+          in	r16,	ADCL	; Lower register must be read before the upper.
+          in	r17,	ADCH
+#+end_src
 * Labs
 ** Lab3
 *** BCD:
@@ -385,10 +430,10 @@ Enabling an interrupt.
   - Öka siffra
   - Spara siffra till SRAM.
   - Siffra för stor?
-    - Ja? Nollställ i SRAM.
+    - Ja? Nollställ i SRAM, gå till nästa siffra.
     - Nej? Fortsätt.
-  - Återställ kontext
-  - Reti.
+- Återställ kontext
+- Reti.
 *** MUX:
 - Spara kontext
 - Hämta position från SRAM.
@@ -402,24 +447,3 @@ Enabling an interrupt.
 - Tänd ny siffra.
 - Återställ kontext.
 - Reti
-** Lab2
-*** Beep
-#+begin_src asm
-  CONSTANTS:
-          .equ	T = 100
-          .equ	N = 50
-  ;;; Load r16 with N*x where x is the amount of time.
-  BEEP:
-          sbi	PORTB,	7
-          call	DELAY
-          cbi	PORTB,	7
-          call	DELAY
-          dec	r16
-          brne	BEEP
-          ret
-
-  DELAY:
-          ldi	r16,	T
-          ...
-          ret
-#+end_src
