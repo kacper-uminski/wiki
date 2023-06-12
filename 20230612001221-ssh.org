@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       9dbdbdaf-e097-4e74-a848-534420e2a0b4
+:END:
+#+title: SSH
+* Key generation and registration with Gitlab
+To setup an SSH key:
+1. First check if you already have a key:
+   #+begin_src sh
+     cat ~/.ssh/id_rsa.pub
+   #+end_src
+   If the files exists and begins with 'ssh-rsa' you can skip the next step.
+2. Create a key if you do not already have one:
+   #+begin_src sh
+     ssh-keygen -t rsa -C "Comment" -b 4096
+   #+end_src
+   You will be prompted for where to save the key, normally in ~/.ssh.
+   You will be prompted for an optional passphrase for the key.
+3. Copy the key into your clipboard and paste it into Gitlab under
+   Profile Picture > Edit Profile > SSH Keys.
+   If Gitlab complains that the key's fingerprint is taken, it means
+   that you have already added the key.

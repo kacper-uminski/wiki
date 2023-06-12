@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       81bf4eb7-0597-45d0-b9fb-e124daac37a2
+:END:
+#+title: Dotfiles
+Dotfiles can be stored in a bare git repo. The method is credited to [[https://www.atlassian.com/git/tutorials/dotfiles][this]] article.
+* Initialization
+#+begin_src bash
+  git init --bare $HOME/software/dotfiles/
+  alias dotfiles = 'git --git-dir=$HOME/software/dotfiles --work-tree=$HOME'
+  dotfiles config --local status.showUntrackedFiles no
+#+end_src
+* Migration to new system
+#+begin_src bash
+  alias dotfiles = 'git --git-dir=$HOME/software/dotfiles --work-tree=$HOME'
+  git clone --bare https://github.com/kacper-uminski/dotfiles $HOME/software/dotfiles/
+  dotfiles checkout
+  dotfiles config --local status.showUntrackedFiles no
+#+end_src
