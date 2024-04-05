@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       43b2eb79-c11b-47e4-9cca-30fe156790f1
+:END:
+#+STARTUP: latexpreview
+#+title: Distributive Property
+Given two binary operations \[\odot\] and \[\oplus\] on a set \[S\],
+- The operation \[\odot\] is /left-distributive/ over (or with respect to) \[\oplus\] if:
+   \[x \odot (y \oplus z) = (x \odot y) \oplus (x \odot z), \forall x, y, z \in S\].
+
+- The operation \[\odot\] is /right-distributive/ over (or with respect to) \[\oplus\] if
+  \[(y \oplus z) \odot x = (y \odot x) \oplus (z \odot x), \forall x, y, z \in S\].
+
+- The operation \[\odot\] is /distributive/ over \[\oplus\] if it is left- and right-distributive.

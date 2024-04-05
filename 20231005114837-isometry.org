@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       49725ab9-a608-41e4-86eb-d853e2b9ad72
+:END:
+#+STARTUP: latexpreview
+#+title: Isometry
+Let \[X\] and \[Y\] be metric spaces with metrics (distances) \[d_x\] and \[d_y\].
+A map \[f: X \to Y\] is called an *isometry* or *distance preserving* if \[\forall a,b \in X, d_x(a,b) = d_y(f(a), f(b))\].

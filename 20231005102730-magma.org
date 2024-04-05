@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       af7bffa1-2194-4a6d-9053-8506df751dfe
+:END:
+#+STARTUP: latexpreview
+#+title: Magma
+A magma in mathematics is a set \[A\] and an operation \[\star\] such that \[\forlall (a,b) \in A^2, a \star b \in A\]

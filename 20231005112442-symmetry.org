@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       6acd4fda-e972-43c7-8205-7dd398219f9a
+:END:
+#+STARTUP: latexpreview
+#+title: Symmetry
+A symmetry is an operation on an object which leaves the object unchanged.
+
+A picture on a 2D plane can be described as a function \[f: \mathbb{R}^2 \to F\] where F is a set of colors.
+A symmetry on the picture can then be defined as a function \[\phi: \mathbb{R}^2 \to \mathbb{R}^2, f(\phi(x,y)) = f(x,y), \forall x,y \in \mathbb{R}\].

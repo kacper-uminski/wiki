@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       aefc8689-aecd-4962-bdc1-ece1e5dcfa36
+:END:
+#+STARTUP: latexpreview
+#+title: Abelian Group
+An Abelian group in mathematics is a [[id:af7bffa1-2194-4a6d-9053-8506df751dfe][magma]] such that its operation is [[id:a7b12fb8-977a-437a-8ae3-41b7d4238f72][commutative]].

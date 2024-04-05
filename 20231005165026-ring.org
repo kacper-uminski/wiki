@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       5af5524d-ad8d-4dae-af07-967a43f3db42
+:END:
+#+STARTUP: latexpreview
+#+title: Ring
+A /ring/ in mathematics is a set \[R\] equipped with two binary operations \[\oplus\] (addition) and \[\odot\] (multiplication)
+satisfying the three following sets of axioms, called the *ring axioms*:
+1. \[R\] is an [[id:aefc8689-aecd-4962-bdc1-ece1e5dcfa36][abelian group]] under addition.
+2. \[R\] is a [[id:49995868-2d48-4c0d-b778-fe4690929856][monoid]] under multiplication.
+3. Multiplication is [[id:43b2eb79-c11b-47e4-9cca-30fe156790f1][distributive]] with respect to addition.

@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       814471f1-82c3-48db-9ba3-255bcc357072
+:END:
+#+title: Trees
+
+(Un)ordered (multi)sets/maps can be implemented as trees.
+
+* Definitions
+- Ordered tree: linear ordering (left -> right, first -> second, etc.) between the children of each node. Do not confuse with Sorted trees.
+- Bitary tree: ordered tree where each node has a degree <= 2. A node can have a left child and a right child.
+- Empty binay tree (null): a binary tree without nodes.
+- Full binary tree: non-empty binary tree where each node has a degree of 0 or 2. Consequence: number of leaves = 1 + number of internal nodes.
+- Perfect binary tree: full binary tree where all leaves have the same depth. Consequence: number of nodes = 2^(h+1) - 1 where /h/ is the height of the tree.
+- Complete binary tree: An approximation of perfect trees where rows are filled row after row from left to right. Consequence: a complete binary tree with height /h/ and /n/ nodes satisfies 2^h <= /n/ <= 2^(h+1)-1

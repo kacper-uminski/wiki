@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       a7b12fb8-977a-437a-8ae3-41b7d4238f72
+:END:
+#+STARTUP: latexpreview
+#+title: Commutative Property
+In mathematics, a binary operation \[*\] on a set \[S\] is called /commutative/ if \[x * y = y * x, \forall x,y \in S\]. If this is not satisfied, the operation is called /non-commutative/.

@@ -1,0 +1,117 @@
+:PROPERTIES:
+:ID:       e2c69f0c-321e-42b7-a877-e084904e57e8
+:END:
+#+title: Multivariate Analysis
+#+STARTUP: latexpreview
+In univariate analysis we studied $f: \mathbb{R} \rightarrow \mathbb{R}, y = f(x)$
+These functions can often be simply illustrated with their graph, however sometimes
+more variables are necessary.
+
+* Examples:
+  - Height of the earth's surface above sea level: $h(latitude, longitude) : \mathbb{R}^2 \rightarrow \mathbb{R}$
+  - Temperature $T(latitude, longitude, altitude, time) : \mathbb{R}^4 \rightarrow \mathbb{R}$
+  - Gravitational acceleration $\vec{g}(latitude, longitude, altitude) : \mathbb{R}^3 \rightarrow \mathbb{R}^3$
+
+* Some definitions in $\mathbb{R}^n$
+- The Distance between $\vec{x}$ and $\vec{a}$ is defined as $|\vec{x} - \vec{a}| = \sqrt{\sum_{i=1}^n (x_i - a_i)^2}$
+- A Neighborhood of $\vec{a}$ is defined as $\{\vec{x} \in \mathbb{R}^n : |\vec{x}-\vec{a}| < r > 0, r \in \mathbb{R}\}$
+
+
+
+* Derivatives
+For any function $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ we can fix either $x$ or $y$ and
+define $f_x'(a,b) = \lim_{h \rightarrow 0} \frac{f(a+h, b) - f(a,b)}{h}$ if $\exists lim$, and likewise for $y$.
+
+These derivatives can be written as follows:
+$f_x', \frac{\partial f}{\partial x}, D_xf$
+
+There is never any one single derivative if the function is multivariate, as this is dependent on
+the direction one is considering.
+
+For example:
+$f(x,y) = ye^{xy}+sin(x^2+2y)$ gives
+$\frac{\partial f}{\partial x} = y \cdot ye^{xy}+cos(x^2+2y) = y^2e^{xy}+2xcos{x^2+2y}$
+
+** Simple derivatives
+Def: $f$ is in class $C^1$ if the partial derivatives $\left( \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right)$ are continuous.
+
+All elementary functions and their combinations, sums, products, ... are of class $C^0, C^1, C^3$ and so on.
+
+Note: From univariate analysis we know that $f$ is continuous if $f$ is derivable. This is not the case
+for multivariate functions.
+
+For example:
+\begin{equation*}
+f(x,y) = \begin{cases}
+\frac{xy}{x^2+y^2}, (x,y) \neq (0,0) \\
+0, (x,y) = (0,0)
+\end{cases}
+\end{equation*}
+
+$f$ is only continuous if both $f_x'$ and $f_y'$ are both continuous.
+** Higher order derivatives
+$f_{xx}'' = (f_x')_x', f_{xy}'' = (f_x')_y'$
+
+Another way to write this is
+$\frac{\partial^2f}{\partial x^2} = \frac{\partial}{\partial x}(\frac{\partial f}{\partial x}) = f_{xx}''$
+
+
+$\frac{\partial^2f}{\partial x \partial y} = f_{yx}''$  (Note the order of x and y.)
+
+
+Example:\$f(x,y) = xy^2 + ln(xy^2), x>0, y>0$ Find $f_x', f_y'$ and their second derivatives.
+
+$f(x,y) = xy^2+lnx + 2lny \Rightarrow f_x' = y^2+\frac{1}{x}, f_y' = 2xy+\frac{2}{y}$
+
+$f_{xx}'' = -\frac{1}{x^2}, f_{yy}'' = 2x-\frac{2}{y^2}, f_{xy}'' = 2y, f_{yx}'' = 2y$
+
+Observe that $f_{xy}'' = f_{yx}''$. This in not always the case, but if it is if both $f$ are continuous.
+
+Note: In univariate analysis, if $f'(x) = 0$ on an interval then $f(x) = C$ where $C$ is a constant.
+With two variables, $f(x,y)$: if $\frac{\partial f}{\partial x} = 0$ in a convex location on the plane,
+then $f(x,y) = g(y)$, which is constant with respect to $x$.
+
+Example: Find all $f \in C^2, f: \mathbb{R}^3 \rightarrow \mathbb{R}$ such that $\frac{\partial f}{\partial x}=ye^z, \frac{\partial f}{\partial y} = xye^z+2z$
+Begin by integrating the one that seems easiest.
+$\frac{\partial f}{\partial x} = ye^z \Rightarrow f = \int ye^zdx = xye^z+g(y,z)$
+Derivation on y then gives us
+$\frac{\partial f}{\partial x} = \frac{\partial}{\partial y}(xye^z+g(y,z)) = xe^z + \frac{\partial g}{\partial y}(y,z) = xe^z + 2y \leftarrow Earlier$
+so   $\frac{\partial g}{\partial y}(y,z) = 2 \Rightarrow g(y,z) = y^2+h(z)$
+As such f$f(x,y,z) = xye^z + g(y,z) = xye^z + y^2 + h(z)$
+Derivation on z then gives $\frac{\partial f}{\partial z} = xye^z + h'(z) = xye^z + 2z \leftarrow Earlier$
+So $h'(z) = 2z \Rightarrow h(z) = z^2 + C$
+
+Thus $f(x,y,z) = xye^z + y^2+z^2 + C, C \in \mathbb{R}$
+
+** Differentiability
+*** For one variable:
+$f(x)$ is differentiable in $a$ if $R(h) = \frac{f(a+h)-f(a)-f'(a)h}{|h|} \rightarrow 0, h \rightarrow 0$
+
+ $a+h = x$ gives $f(x) = f(a)+f'(a)\cdot(x-a)+|x-a|R(x-a), R(x-a) \to 0, x \to a$
+*** For two variables:
+$f$ is differentiable in $(a,b)$ if $\exists A_1, A_2 \in \mathbb{R}, R(h,k) = \frac{f(a+h, b+h) - f(a,b) - A_1h-A_2k}{|(h,k)| }\to 0, |(h,k)| \to 0$
+From the above we get that $A_1 = f_x'(a,b), A_2 = f_y'(a,b)$
+
+Theorem:
+$f$ is differentiable in $(a,b)$ and
+$z = f(a,b) + f_x'(a,b)(x-a) + f_y'(a,b)(y-b)$ at is the equation for its tangent plane at $(a,b,f(a,b))$
+if $f \in C^1$ in any neighborhood of $(a,b)$
+
+Example:
+Is there any $A(x)$ such that
+\begin{cases}
+f_x' = y^2A(x) \\
+f_y' = 2yx^3
+\end{cases}
+has a $C^2$-solution f(x,y) on the whole plane?
+
+Solution:
+$f \in C^2 \Rightarrow f_{xy}'' = f_{yx}''$
+gives that
+\begin{cases}
+f_{xy}'' = 2yA(x) \\
+f_{yx}'' = 6yx^2
+\end{cases}
+which implies
+$2yA(x) = 6yx^2, \forall(x,y)$
+so $A(x) = 3x^2$

@@ -8,87 +8,140 @@ VHDL = VHSIC HDL
 VHSIC = Very High Speed Integrated Circuit
 HDL = Hardware Description language
 
-* Standard program structure
+* Standard program syntax
 #+name: Imports Header
 #+begin_src vhdl
   library IEEE;
   use IEEE.std_logic_1164.all;
   use IEEE.numeric.std.all;
-#+end_src
 
-#+name interface to the world.
-#+begin_src vhdl
+  -- Name entity to world
   entity xyz is
     port(x, y: in std_logic;
-         z : out std_logic;
+         z : out std_logic);
   end entity xyz;
+
+  architecture func of xyz is
+  -- Internal signal declarations
+  begin
+    -- Behavior declaration
+  end architecture func;
 #+end_src
 
-#+name: Signal Concatenation
-#+begin_src vhdl
-  qx <= q & x; -- qx is q followed by x.
-#+end_src
 
-#+name: to_integer
+* Assignments and conversions
 #+begin_src vhdl
-to_integer(x) -- Returns x as an integer.
-#+end_src
 
-#+name: signed
-#+begin_src vhdl
-signed(x) -- Returns x as a signed integer.
-#+end_src
+  -- qx is q followed by x.
+  qx <= q & x;
 
-#+name: Zeroing a vector.
-#+begin_src vhdl
+  -- Returns x as an integer.
+  to_integer(x) 
+
+  -- Returns x as a signed integer.
+  signed(x) 
+
+  -- Zeroes the vector.
   count <= (others => '0';);
 #+end_src
 
-* TODO Components
-Components are the equivalent of functions where each defines a subcircuit.
-These can then be connected together to form a larger structure.
-Additionally, they can be made generic, which allows arbitrary sizes, inputs, etc.
-
-Below are a few examples:
-#+name: 4_bit_adder.vhdl
+* Loops
 #+begin_src vhdl
-  entity FA is
-    port(a, b, ci : int std_logic;
-         s, co : out std_logic);
-  end FA;
-
-  architecture func of FA is
-  signal x, y, z : std_logic;
-  begin
-    x <= a xor b;
-    y <= a and b;
-    z <= x and ci;
-    co <= y or z;
-    s <= x xor ci;
-  end func;
+  for i in 31 downto 0 loop
+    p := p xor x(i);
+  end loop;
+              
 #+end_src
-* Minimal example:
-((ab) + (a+b))'
-
+* D-flip-flop
+#+name: Simple example:
 #+begin_src vhdl
-  entity cnet is
-    port (a, b : in std_logic;
-          c: out std_logic);
-  end entity cnet;
-
-  architecture func of cnet is
-    signal x, y : std_logic;
+  entity dff is
+    port(d, clk : in std_logic;
+         q : out std_logic);
+  end;
+  architecture func of dff is
   begin
-    c <= not(x or y);
-    x <= a and b;
-    y <= a or b;
-  -- c <= not((a and b) or (a or b));
+    process(clk)
+    begin
+      if rising_edge(clk) then
+        q <= d;
+      end if;
+    end process;
   end architecture;
 #+end_src
 
-* Combinatory circuits.
-* Multiplexer:
-** with-select-when
+* Port statement
+There are multiple possible ports:
+- ~in~
+- ~out~
+- ~inout~
+- ~buffer~
+
+* Data types
+| Type       | Possible values | Operators               |
+|------------+-----------------+-------------------------|
+| integer    | Signed 32-bit   | abs mod rem math comp   |
+| bit        | '0', '1'        | not                     |
+| boolean    | 'false', 'true' | not gate comp           |
+| bit_vector | Any vec of bits | not & gate comp sll srl |
+|            |                 | sla sra rol ror         |
+
+* Aritmetic
+Only use the ~NUMERIC_STD~ library.
+
+* User declared types
+** Enums
+#+begin_src vhdl
+  type state is (odd, even);
+
+  signal bus : state;
+#+end_src
+** Records
+Like structs in C.
+#+begin_src vhdl
+  type controlword is record
+                        alu: unsigned(3 downto 0);
+                        tobus: unsigned(2 downto 0);
+                        halt: std_logic;
+  end record;
+
+  type styrminne is array(0 to 31) of controlword;
+
+  signal styr1, styr2: controlword;
+  signal mm: styrminne;
+  -- ...
+  styr1.halt <= '0';
+  styr1.alu <= "1011";
+  styr1.tobus <= styr2.tobus;
+  -- ...
+  mm <= ("1011", "111", '0');
+#+end_src
+
+* Miscellaneous useful stuff
+
+** Constants
+#+begin_src vhdl
+  constant max: unsigned(3 downto 0) := "1111";
+  signal sub: unsigned(3 downto 0);
+  if sub = max then ...
+#+end_src
+
+** Aliases
+#+begin_src vhdl
+  signal address: unsigned(31 downto 0);
+  alias top_ad: unsigned(3 downto 0) is address(31 downto 28);
+#+end_src
+
+** Concatenation
+#+begin_src vhdl
+  signal b : std_logic_vector(1 downto 0);
+  signal a,b : std_logic;
+  bus <= a & b;
+#+end_src
+
+* Combinatoric selection
+** Multiplexer:
+*** with-select-when
 Can only be used outside a process.
 #+begin_src vhdl
   entity mux is
@@ -107,7 +160,7 @@ Can only be used outside a process.
   end architecture func;
 #+end_src
 
-** when-else
+*** when-else
 Can only be used outside a process.
 #+begin_src vhdl
   entity mux is
@@ -125,46 +178,77 @@ Can only be used outside a process.
   end architecture func;
 #+end_src
 
-** if-then-else
-Can only be used inside a process.
-
-** case-when
-Can only be used inside a process.
-* D-flip-flop
-#+name: Simple example:
+*** Process specific
+These can only be used inside a process.
+**** if-then-else
 #+begin_src vhdl
-  entity Dff is
-    port(d, clk : in std_logic;
-         q : out std_logic);
-  end;
-  architecture func of Dff is
+  if (bool1) then
+      (statement1);
+  elsif (bool2) then
+      (statement2);
+  else
+      (statement3);
+  end if;
+#+end_src
+**** case-when
+#+begin_src vhdl
+  case (sig) is
+    when (val1) => (expr 1);
+    when (val2) => (expr 2);
+    when others => (expr 3);
+  end case;
+#+end_src
+* Components
+Components are the equivalent of functions where each defines a subcircuit.
+These can then be connected together to form a larger structure.
+Additionally, they can be made generic, which allows arbitrary sizes, inputs, etc.
+
+Below are a few examples:
+#+name: 4 bit adder
+#+begin_src vhdl
+  entity FA is
+    port(a, b, ci : int std_logic;
+         s, co : out std_logic);
+  end FA;
+
+  architecture func of FA is
+  signal x, y, z : std_logic;
   begin
+    x <= a xor b;
+    y <= a and b;
+    z <= x and ci;
+    co <= y or z;
+    s <= x xor ci;
+  end func;
+#+end_src
+
+#+name: Single pulse generator
+#+begin_src vhdl
+  entity pulser is
+    port (x, clk : in std_logic;
+          w : out std_logic);
+  end entity cnet;
+
+  architecture func of pulser is
+    signal y, z : std_logic;
+  begin
+    w <= y and not z; -- Output logic
+
     process(clk)
     begin
       if rising_edge(clk) then
-        q <= d;
+        y <= x; -- Sync flipflop
+        z <= y; -- State flipflop
       end if;
     end process;
   end architecture;
 #+end_src
 
-#+name: Coupled flip-flops:
-#+begin_src vhdl
-  process(clk)
-  begin
-    if rising_edge(clk) then
-      y <= a;
-      x <= y;
-    end
-  end
-#+end_src
-* Data types
-** std_logic
-- Normal Values:
-  - '0' - Forcing 0
-* Decade Counter
+* Example components
+** Decade Counter
 #+name: Decade Counter
 #+begin_src vhdl
+
   library IEEE;
   use IEEE.std_logic_1164.all;
   use IEEE.numeric_std.all;
@@ -175,5 +259,10 @@ Can only be used inside a process.
   end 4bit_counter
 
   architecture simple of counter is
-  
+    signal x0, x1, x2, x3 : std_logic;
+  begin
+    -- Clock logic
+  end architecture simple;
+
 #+end_src
+

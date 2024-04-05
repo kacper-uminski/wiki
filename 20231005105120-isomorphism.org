@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       95b41aac-8e92-4538-ab38-a00313b4b8c9
+:END:
+#+STARTUP: latexpreview
+#+title: Isomorphism
+Two [[id:af7bffa1-2194-4a6d-9053-8506df751dfe][Magmas]] \[(G, *), (H, \odot)\] which may seem different can have the same fundamental structure.
+These can be called isomorphic, written \[(G, *) \cong (H, \odot)\] (or simply \[G \cong H \] if the operations are known.) if there exists a bijective function \[f: G \to H\], such that  \[\forall u,v \in G, f(u * v) = f(u) \odot f(v)\].

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       5a54f2be-bb7a-445e-bd89-17cbaa13ab51
+:END:
+#+STARTUP latexpreview
+#+title: Limits
+Limits describe how a function \[f(x)\] behaves as \[x\] approaches a specific value or any large value, including infinity.
+
+* Definition
+** Specific values
+\[f(x) \to A, x \to a\] i.e. \[\lim_{x \to a} f(x) = A\] if:
+- \[f\] is defined in the arbitrarily close to \[x\].
+- \[\forall \epsilon > 0, \exists \delta > 0,  |f(x + \delta) -A| < \epsilon \].
+
+** Large values
+\[f(x) \to A, x \to \infty\] i.e. \[lim_{x \to \infty} f(x) = A\] if:
+- \[f\] is defined for arbitrarily large sizes of \[x\].
+- \[\forall \epsilon > 0, \exists \omega > 0, |f(x + \omega) - A| < \epsilon, x \in D_f \]

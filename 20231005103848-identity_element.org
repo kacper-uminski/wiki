@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       a6b01ac4-60dd-430b-a4af-b9c7fed28d89
+:END:
+#+STARTUP: latexpreview
+#+title: Identity Element
+If the set of a magma \[A\] contains an element \[e \in A\] such that  \[\forall x \in A, e \star x = x, x \star e = x \], e is called an identity element.
+
+A magma can at most have one identity element.

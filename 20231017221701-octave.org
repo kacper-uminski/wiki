@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       57afbba7-8443-4cc0-9c1f-955a4f643eff
+:END:
+#+title: Octave
+Octave is the open source version of MatLab. It differs in some syntax and
+function names.
+
+* Saving plots to file
+#+begin_src octave
+  saveas(figure(1),'figure-name.png','png')
+#+end_src
+
+* Preventing figure from auto-closing
+#+begin_src octave
+  waitfor(figure(1))
+#+end_src

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       96a975c6-20e5-4cbe-9145-94221c2b579f
+:END:
+#+STARTUP: latexpreview
+#+title: Graph Theory
+* Google Pagerank
+Consider a graph of webpages where the vertexes are pages and edges are links
+between them.
+Nodes are labeled i, j, k, etc.
+
+The graph can be represented with an adjacency matrix $A_{N \times N}$  where $N$ is the
+size number of vertexes and $A_{ij} = 1 \Rightarrow \exists i \rightarrow j$
+
+The number of incoming links to a page is then $k_i^{in} \sum_{j=1}^N A_{ij}$
+and the number of outgoing links is $k_i^{out} = \sum_{j=1}^N A_{ji}$
+
+

@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       4ed37078-3b19-42bc-96ee-c2b087253104
+:END:
+#+STARTUP: latexpreview
+#+title: Associative Property
+A binary operation \[\oplus\] is called /associative/ if  \[\forall x, y, z, (x \oplus y) \oplus z = x \oplus (y \oplus z)\]

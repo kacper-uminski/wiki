@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       d285dd2f-43a6-4a26-a29d-851e4e1b98ed
+:END:
+#+title: Operating Systems
+An operating system is comprised of a kernel and system programs running on top of it.
+
+* Interrupts
+1. In the event of an interrupt, save the processor state.
+2. Execute interrupt service routine (ISR).
+3. Restore processor state.
+
+** Types
+- A trap is a /software/-generated interrupt caused either by an error or a user request.
+  - Examples:
+    - Division by zero
+    - Request from user
+
+**  Why interrupts?
+Separation of modes into user mode and kernel mode.
+This is done through interrupts (a syscall).
+

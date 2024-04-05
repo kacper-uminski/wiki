@@ -1,0 +1,61 @@
+:PROPERTIES:
+:ID:       7a802fb3-d1b5-47d2-a01f-e89517e79cc1
+:END:
+#+title: Threading
+* Deadlocks
+#+begin_src c
+          struct lock {};
+          struct cond {};
+
+          void lock_acquire(struct lock lock);
+          void lock_release(struct lock lock);
+          void cond_wait(struct cond cond, struct lock lock);
+          void cond_signal(struct cond cond);
+          void sema_up(int* value);
+          void sema_down(int* value);
+
+
+          struct buffer {
+            int* data_begin;
+            int* data_end;
+            int* rpos;
+            int* wpos;
+            int free;
+            struct lock lock;
+            struct cond and;
+          };
+
+          void buffer_put(struct buffer* buf, int value) {
+            while (buf->free == 0) {
+              cond_wait(buf->and, buf->lock); // Temporarily release lock while waiting for condition.
+            }
+
+            ,*buf->wpos = value;
+            if (++buf->wpos == buf->data_end) {
+              buf->wpos = buf->data_begin;
+            }
+            --buf->free;
+
+            cond_signal(buf->and); // Signal that you are done with the resources.
+            lock_release(buf->lock);
+          }
+
+          int buffer_get(struct buffer* buf) {
+            int count = buf->data_end - buf->data_begin;
+            lock_acquire(buf->lock);
+
+            while (buf->free == count) {
+              cond_wait(buf->cond, buf->lock);
+            }
+            int r = *buf->rpos;
+
+            if (++buf->rpos == buf->data_end) {
+              buf->rpos = buf->data_begin;
+            }
+            ++buf->free;
+
+            cond_signal(buf->and);
+            lock_release(buf->lock);
+            return r;
+          }
+#+end_src

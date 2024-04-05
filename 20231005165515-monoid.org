@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       49995868-2d48-4c0d-b778-fe4690929856
+:END:
+#+STARTUP: latexpreview
+#+title: Monoid
+A /Monoid/ in mathematics is a [[id:e64893d1-b701-41aa-93f4-021c6e584ac2][semigroup]] with the additional requirement that its set contains an [[id:a6b01ac4-60dd-430b-a4af-b9c7fed28d89][identity element]] under its operation.
+
+* Definition
+A set \[S\] forms a /monoid/ under a binary operation \[\odot: S^2 \to S\] if:
+- \[\odot\] is [[id:4ed37078-3b19-42bc-96ee-c2b087253104][associative]].
+- \[S\] contains an identity element.
+
+A monoid where each element in \[S\] has an inverse is called a [[id:81c25420-4283-40ef-a167-3ea147cc0cfc][group]].

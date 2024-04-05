@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       ebc62716-666a-4045-b72a-d867943fae68
+:END:
+#+STARTUP: latexpreview
+#+title: Euclidean Plane Isometry
+In geometry a Euclidean Plane Isometry is an [[id:49725ab9-a608-41e4-86eb-d853e2b9ad72][Isometry]] of the Euclidean plane, or more informally,
+a way of transforming the that preserves all geometric properties of the plane (e.g length).
+
+* Formal Definition
+An *isometry* of the euclidean plane is a distance-preserving transformation of the plane.
+That is, it is a map \[M: \mathbb{R}^2 \to \mathbb{R}^2\]  such that \[\forall p,q \in \mathbb{R}^2 d(p,q) = d(M(p), M(q))\] where d
+is the euclidean distance between p and q.
+
+* Classification
+There are four distinct categories of euclidean plane isometries:
+
+** Reflections
+Mirror reflections along a line.
+
+** Translations
+Shifts of the plane without rotation
+
+** Rotations
+Rotation around a point by some given angle.
+
+** Glide Reflections
+Reflecting the plane along a line and then shifting it along it.
